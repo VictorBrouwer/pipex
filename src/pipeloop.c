@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:32:12 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/28 13:37:00 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:50:00 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ void	execute_child(t_pipex_data *pipex, int pipefd[2])
 	redirect_std_out(pipefd[WRITE]);
 	argvp = ft_split(pipex->argv[pipex->cmd_counter], ' ');
 	pipex->curr_cmd = get_command_path(pipex, argvp[0]);
-	if (execve(pipex->curr_cmd, argvp, pipex->envp) == -1) {
-		printf("%d\n", errno);
+	if (execve(pipex->curr_cmd, argvp, pipex->envp) == -1)
 		error(errno, "execve error");
-	}
 }
 
 void	execute_first_child(t_pipex_data *pipex, int pipefd[2])

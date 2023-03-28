@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:10:53 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/28 13:22:47 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:49:37 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_pipex_data	*init_pipex(int argc, char **argv, char **envp)
 		pipex->infile_fd = open(argv[1], O_RDONLY);
 		if (pipex->infile_fd == -1)
 			ft_putstr_fd("invalid infile", STDERR_FILENO);
-			// error(1, "invalid infile");
 	}
 	return (pipex);
 }
