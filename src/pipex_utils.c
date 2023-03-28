@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/26 18:39:51 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/26 18:40:00 by vbrouwer         ###   ########.fr       */
+/*   Created: 2023/03/07 10:02:57 by vbrouwer          #+#    #+#             */
+/*   Updated: 2023/03/23 14:27:03 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include"pipex.h"
 
-void	ft_free_split(char **arr)
+void	redirect_std_in(int fd)
 {
-	size_t	i;
+	if (dup2(fd, STDIN_FILENO) == -1)
+		error(1, "duplication std_in error");
+	close(fd);
+}
 
-	i = 0;
-	while (arr[i] != NULL)
-		free(arr[i++]);
-	free(arr);
-	return ;
+void	redirect_std_out(int fd)
+{
+	if (dup2(fd, STDOUT_FILENO) == -1)
+		error(1, "duplication std_out error");
+	close(fd);
 }
