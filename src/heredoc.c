@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 14:21:32 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/28 10:34:42 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/03/31 12:10:29 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handle_hd(t_pipex_data *pipex)
 	while (line && ft_strncmp(line, pipex->hd_delim, \
 			ft_strlen(pipex->hd_delim)) != 0)
 	{
-		write(pipefd[1], line, ft_strlen(line));
+		write(pipefd[WRITE], line, ft_strlen(line));
 		free(line);
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:32:12 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/28 13:50:00 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/03/31 12:11:17 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	pipe_loop(t_pipex_data *pipex)
 	pid = fork_and_check();
 	if (pid == 0)
 		execute_last_child(pipex, pipefd);
-	close(pipefd[0]);
-	close(pipefd[1]);
+	close(pipefd[READ]);
+	close(pipefd[WRITE]);
 	return (pid);
 }
 
@@ -58,10 +58,10 @@ void	execute_first_child(t_pipex_data *pipex, int pipefd[2])
 {
 	char	**argvp;
 
-	close(pipefd[0]);
+	close(pipefd[READ]);
 	if (pipex->infile_fd != -1)
 		redirect_std_in(pipex->infile_fd);
-	redirect_std_out(pipefd[1]);
+	redirect_std_out(pipefd[WRITE]);
 	argvp = ft_split(pipex->argv[pipex->cmd_counter], ' ');
 	pipex->curr_cmd = get_command_path(pipex, argvp[0]);
 	if (execve(pipex->curr_cmd, argvp, pipex->envp) == -1)
@@ -72,7 +72,7 @@ void	execute_last_child(t_pipex_data *pipex, int pipefd[2])
 {
 	char	**argvp;
 
-	close(pipefd[1]);
+	close(pipefd[WRITE]);
 	redirect_std_in(pipex->read_fd);
 	if (ft_strncmp(pipex->argv[1], "here_doc", 8) == 0)
 		pipex->outfile_fd = open(pipex->outfile, \
