@@ -15,7 +15,13 @@ endif
 INCLUDE		:= $(addprefix -I,$(INC_DIR))
 LIBS		:= ./libft/libft.a 
 
-SRCS		:= 		$(shell ls src/)
+SRCS		:= 		command.c \
+					error_handling.c \
+					heredoc.c \
+					main.c \
+					pipeloop.c \
+					pipex_utils.c \
+
 OBJS		:= 		$(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 DEP			:=		$(OBJS:%.o=%.d)
 
