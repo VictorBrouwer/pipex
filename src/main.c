@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:10:53 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/28 13:49:37 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/04/03 13:36:27 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex_data	*pipex;
 	int				id;
+	int				status;
 
 	if (argc < 5)
 		error(1, "not enough arguments");
 	pipex = init_pipex(argc, argv, envp);
 	id = pipe_loop(pipex);
-	waitpid(-1, &id, WNOHANG);
 	free(pipex);
-	return (0);
+	waitpid(id, &status, 0);
+	while (wait(NULL) != -1)
+		;
+	if (!WIFEXITED(status))
+		exit(WEXITSTATUS(status));
+	return (WEXITSTATUS(status));
 }
 
 t_pipex_data	*init_pipex(int argc, char **argv, char **envp)

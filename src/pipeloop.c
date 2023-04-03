@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:32:12 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/31 12:11:17 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/04/03 13:13:25 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	execute_child(t_pipex_data *pipex, int pipefd[2])
 	close(pipefd[READ]);
 	redirect_std_in(pipex->read_fd);
 	redirect_std_out(pipefd[WRITE]);
-	argvp = ft_split(pipex->argv[pipex->cmd_counter], ' ');
+	argvp = pipex_split(pipex->argv[pipex->cmd_counter], ' ');
 	pipex->curr_cmd = get_command_path(pipex, argvp[0]);
 	if (execve(pipex->curr_cmd, argvp, pipex->envp) == -1)
 		error(errno, "execve error");
@@ -62,7 +62,7 @@ void	execute_first_child(t_pipex_data *pipex, int pipefd[2])
 	if (pipex->infile_fd != -1)
 		redirect_std_in(pipex->infile_fd);
 	redirect_std_out(pipefd[WRITE]);
-	argvp = ft_split(pipex->argv[pipex->cmd_counter], ' ');
+	argvp = pipex_split(pipex->argv[pipex->cmd_counter], ' ');
 	pipex->curr_cmd = get_command_path(pipex, argvp[0]);
 	if (execve(pipex->curr_cmd, argvp, pipex->envp) == -1)
 		error(errno, "execve error");
@@ -81,7 +81,7 @@ void	execute_last_child(t_pipex_data *pipex, int pipefd[2])
 		pipex->outfile_fd = open(pipex->outfile, \
 				O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	redirect_std_out(pipex->outfile_fd);
-	argvp = ft_split(pipex->argv[pipex->cmd_counter], ' ');
+	argvp = pipex_split(pipex->argv[pipex->cmd_counter], ' ');
 	pipex->curr_cmd = get_command_path(pipex, argvp[0]);
 	if (execve(pipex->curr_cmd, argvp, pipex->envp) == -1)
 		error(errno, "execve error");

@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:12:07 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/03/28 13:45:02 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/04/03 13:48:42 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # include "libft.h"
 
 typedef struct s_pipex_data
@@ -53,5 +55,7 @@ void			execute_last_child(t_pipex_data *pipex, int pipefd[2]);
 void			execute_first_child(t_pipex_data *pipex, int pipefd[2]);
 void			init_here_doc(t_pipex_data *pipex, char **argv);
 void			handle_hd(t_pipex_data *pipex);
+char			**pipex_split(char *s, char c);
+int				skip_quotes(char const *s, int i);
 
 #endif

@@ -21,6 +21,7 @@ SRCS		:= 		command.c \
 					main.c \
 					pipeloop.c \
 					pipex_utils.c \
+					pipex_split.c \
 
 OBJS		:= 		$(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 DEP			:=		$(OBJS:%.o=%.d)
