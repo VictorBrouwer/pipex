@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:32:12 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/04/03 13:13:25 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:02:12 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	execute_first_child(t_pipex_data *pipex, int pipefd[2])
 	close(pipefd[READ]);
 	if (pipex->infile_fd != -1)
 		redirect_std_in(pipex->infile_fd);
+	else
+		exit(EXIT_FAILURE);
 	redirect_std_out(pipefd[WRITE]);
 	argvp = pipex_split(pipex->argv[pipex->cmd_counter], ' ');
 	pipex->curr_cmd = get_command_path(pipex, argvp[0]);

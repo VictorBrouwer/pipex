@@ -6,7 +6,7 @@
 /*   By: vbrouwer <vbrouwer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 11:19:59 by vbrouwer          #+#    #+#             */
-/*   Updated: 2023/04/03 11:44:30 by vbrouwer         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:34:43 by vbrouwer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ char	*get_command_path(t_pipex_data *pipex, char *command)
 	char	*total_command;
 	int		i;
 
+	if (access(command, X_OK & F_OK) == 0)
+		return (command);
 	path = find_path(pipex->envp);
-	if (path == NULL)
-		error(1, "invalid command");
+	if (path == NULL || !command)
+		error(1, "command not found");
 	sep_paths = ft_split(path, ':');
 	end_part_command = ft_strjoin("/", command);
 	i = 0;
@@ -48,6 +50,6 @@ char	*get_command_path(t_pipex_data *pipex, char *command)
 		i++;
 	}
 	clean_up_split(sep_paths);
-	error(1, "invalid command");
+	error(1, "command not found");
 	return (NULL);
 }
